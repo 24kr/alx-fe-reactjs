@@ -37,7 +37,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
       <WelcomeMessage />
-      <UserProfile />
+      <UserProfile name="Alice" age={25} bio="Loves hiking and photography" />
       <Footer />
     </>
   )
