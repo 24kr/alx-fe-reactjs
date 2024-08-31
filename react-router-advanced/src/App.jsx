@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
-import Profile from './pages/Profile';
-import BlogPost from './pages/BlogPost';
+import Home from './components/Home';
+import Profile from './components/Profile';
+import BlogPost from './components/BlogPost';
 import ProtectedRoute from './components/ProtectedRoute';
 
 const isAuthenticated = true; // Simulate authentication status
