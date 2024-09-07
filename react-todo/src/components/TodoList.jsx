@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 
-const initialTodos = [
+const [todos, setTodos] = useState([
   { id: 1, text: 'Learn React', completed: false },
-  { id: 2, text: 'Build a Todo App', completed: false },
-  { id: 3, text: 'Test the App', completed: false },
-];
+  { id: 2, text: 'Learn Testing', completed: false },
+  { id: 3, text: 'Build Todo App', completed: false },
+]);
+
 
 const TodoList = () => {
   const [todos, setTodos] = useState(initialTodos);
