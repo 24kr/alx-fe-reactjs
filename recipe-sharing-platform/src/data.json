@@ -1,14 +1,42 @@
-    [
+[
   {
     "id": 1,
     "title": "Spaghetti Carbonara",
     "summary": "A classic Italian pasta dish with eggs, cheese, bacon, and black pepper.",
-    "image": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.simplyrecipes.com%2Frecipes%2Fspaghetti_with_tomatoes_bacon_and_eggs%2F&psig=AOvVaw0lrEX2twKoRaP5l7TpfyrR&ust=1726113174082000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCIiViuv-uYgDFQAAAAAdAAAAABAP"
+    "image": "https://via.placeholder.com/150",
+    "ingredients": ["200g spaghetti", "100g pancetta", "2 large eggs", "50g pecorino cheese", "Black pepper"],
+    "instructions": [
+      "Boil the spaghetti according to the package instructions.",
+      "Fry the pancetta until crisp.",
+      "Beat the eggs in a bowl and mix with grated cheese and pepper.",
+      "Drain the spaghetti and mix everything together in a pan."
+    ]
   },
   {
     "id": 2,
     "title": "Chicken Tikka Masala",
-    "summary": "Chunks of grilled chicken (tikka) cooked in a smooth buttery & creamy tomato based gravy.",
-    "image": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.seriouseats.com%2Fchicken-tikka-masala-for-the-grill-recipe&psig=AOvVaw1H9yd2nB5mbJ662r4daa6v&ust=1726113297254000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCKCH1ab_uYgDFQAAAAAdAAAAABAE"
+    "summary": "Chunks of grilled chicken (tikka) cooked in a smooth buttery & creamy tomato-based gravy.",
+    "image": "https://via.placeholder.com/150",
+    "ingredients": ["500g chicken breast", "2 tbsp tikka masala paste", "200g tomato sauce", "100ml cream", "Rice for serving"],
+    "instructions": [
+      "Marinate the chicken with tikka masala paste.",
+      "Grill the chicken until cooked.",
+      "Simmer the tomato sauce and add grilled chicken and cream.",
+      "Serve with rice."
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Vegetarian Stir-fry",
+    "summary": "A colorful and healthy stir-fry with tofu and a mix of fresh vegetables.",
+    "image": "https://via.placeholder.com/150",
+    "ingredients": ["200g tofu", "1 red bell pepper", "1 zucchini", "100g broccoli", "2 tbsp soy sauce", "1 tbsp olive oil", "1 clove garlic", "Rice for serving"],
+    "instructions": [
+      "Heat olive oil in a pan and sauté garlic until fragrant.",
+      "Add tofu and cook until golden brown.",
+      "Add chopped vegetables and stir-fry for 5-7 minutes.",
+      "Pour soy sauce over the mixture and stir for another 2 minutes.",
+      "Serve with rice."
+    ]
   }
 ]

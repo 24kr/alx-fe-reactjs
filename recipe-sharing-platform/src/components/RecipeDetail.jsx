@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import recipesData from '../data.json';
 
 const RecipeDetail = () => {
-  const { id } = useParams(); // Extract the recipe ID from the URL
+  const { id } = useParams(); // Get the recipe ID from the URL
   const [recipe, setRecipe] = useState(null);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ const RecipeDetail = () => {
   }, [id]);
 
   if (!recipe) {
-    return <div>Loading...</div>; // Simple fallback while loading data
+    return <div>Loading...</div>; // Display while data is loading
   }
 
   return (
@@ -25,20 +25,19 @@ const RecipeDetail = () => {
       <div className="bg-white p-6 shadow-md rounded-lg mb-6">
         <h2 className="text-2xl font-semibold mb-4">Ingredients</h2>
         <ul className="list-disc list-inside">
-          {/* Sample Ingredients, replace with actual data */}
-          <li>Ingredient 1</li>
-          <li>Ingredient 2</li>
-          <li>Ingredient 3</li>
+          {recipe.ingredients.map((ingredient, index) => (
+            <li key={index}>{ingredient}</li>
+          ))}
         </ul>
       </div>
 
       <div className="bg-white p-6 shadow-md rounded-lg">
         <h2 className="text-2xl font-semibold mb-4">Cooking Instructions</h2>
-        <p>
-          {/* Sample instructions, replace with actual data */}
-          Step 1: Do this. <br />
-          Step 2: Do that. <br />
-        </p>
+        <ol className="list-decimal list-inside">
+          {recipe.instructions.map((instruction, index) => (
+            <li key={index} className="mb-2">{instruction}</li>
+          ))}
+        </ol>
       </div>
     </div>
   );
