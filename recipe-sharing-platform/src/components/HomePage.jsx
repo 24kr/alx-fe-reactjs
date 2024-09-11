@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
+import recipesData from '../data.json'; // Importing the JSON file
 
 const HomePage = () => {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    fetch('../data.json')
-      .then((response) => response.json())
-      .then((data) => setRecipes(data))
-      .catch((error) => console.error('Error fetching recipe data:', error));
+    // Since we're importing the JSON, we directly set it in state
+    setRecipes(recipesData);
   }, []);
 
   return (
