@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types'; // Import PropTypes
 
 const Results = ({ userData, error }) => {
