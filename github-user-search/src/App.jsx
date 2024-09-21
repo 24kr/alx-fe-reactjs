@@ -1,21 +1,20 @@
 import { useState } from 'react';
 import NavBar from './components/NavBar';
-import SearchBar from './components/SearchBar';
+import Search from './components/Search';
 import Results from './components/Results';
-import { fetchGitHubUser } from './services/githubService'; // Import the service
+import { fetchUserData } from './services/githubService';
 
 function App() {
   const [userData, setUserData] = useState(null);
   const [error, setError] = useState(null);
 
-  // Make sure fetchGitHubUser is used when the user searches
   const handleSearch = async (username) => {
     try {
-      const data = await fetchGitHubUser(username); // Use the function here
+      const data = await fetchUserData(username); // Fetch user data
       setUserData(data);
       setError(null); // Clear any previous errors
     } catch (err) {
-      setError('User not found');
+      setError('Looks like we can\'t find the user');
       setUserData(null);
     }
   };
@@ -24,7 +23,7 @@ function App() {
     <div className="App">
       <NavBar />
       <div style={{ padding: '1rem' }}>
-        <SearchBar onSearch={handleSearch} /> {/* Pass the search function */}
+        <Search onSearch={handleSearch} /> {/* Pass handleSearch to Search component */}
         <Results userData={userData} error={error} />
       </div>
     </div>
