@@ -13,7 +13,7 @@ function App() {
       const data = await fetchUserData({ username, location, minRepos });
       setUserData(data.items || []); // Get the list of users
       setError(null); // Clear any previous errors
-    } catch (err) {
+    } catch {
       setError('Looks like we can\'t find the user');
       setUserData([]);
     }

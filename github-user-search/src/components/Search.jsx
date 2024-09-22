@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
@@ -17,7 +17,7 @@ const Search = ({ onSearch, userData, error }) => {
       
       const response = await axios.get(`https://api.github.com/search/users?${query}`);
       return response.data;
-    } catch (error) {
+    } catch {
       throw new Error('Error fetching GitHub user');
     }
   };
@@ -29,7 +29,7 @@ const Search = ({ onSearch, userData, error }) => {
     try {
       const data = await fetchUserData({ username, location, minRepos });
       onSearch(data); // Pass the result to the parent component (App)
-    } catch (err) {
+    } catch {
       console.error('Error fetching GitHub users');
     } finally {
       setIsLoading(false);
@@ -73,7 +73,7 @@ const Search = ({ onSearch, userData, error }) => {
       {/* Results Section */}
       <div className="mt-4">
         {error ? (
-          <p className="text-red-500">Looks like we can't find the user</p>
+          <p className="text-red-500">Looks like we can not find the user</p>
         ) : (
           userData && userData.length > 0 && (
             <div>

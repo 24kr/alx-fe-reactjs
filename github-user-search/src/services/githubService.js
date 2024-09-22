@@ -11,7 +11,8 @@ export const fetchUserData = async ({ username, location, minRepos }) => {
   try {
     const response = await axios.get(`https://api.github.com/search/users?q=${query}`);
     return response.data; // Return user data
-  } catch (error) {
+  } 
+  catch (error) {
     throw error; // Throw the error to be handled in the component
   }
 };
