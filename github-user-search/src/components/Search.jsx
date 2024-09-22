@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const Search = ({ onSearch, userData, error }) => {
@@ -7,17 +7,6 @@ const Search = ({ onSearch, userData, error }) => {
   const [minRepos, setMinRepos] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSearch = async ({ username, location, minRepos }) => {
-    try {
-      const data = await fetchUserData({ username, location, minRepos });
-      setUserData(data.items || []); // Get the list of users
-      setError(null); // Clear any previous errors
-    } catch (err) {
-      setError('Looks like we can\'t find the user');
-      setUserData([]);
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -25,7 +14,7 @@ const Search = ({ onSearch, userData, error }) => {
     try {
       await onSearch({ username, location, minRepos });
     } catch (err) {
-      console.error('Error fetching GitHub user');
+      console.error('Error fetching GitHub users');
     } finally {
       setIsLoading(false);
     }
@@ -70,15 +59,19 @@ const Search = ({ onSearch, userData, error }) => {
         {error ? (
           <p className="text-red-500">Looks like we can't find the user</p>
         ) : (
-          userData && (
-            <div className="border border-gray-300 p-4 rounded">
-              <h2 className="text-lg">{userData.login}</h2>
-              <img src={userData.avatar_url} alt={`${userData.login}'s avatar`} width="100" />
-              <p>Location: {userData.location || 'N/A'}</p>
-              <p>Repositories: {userData.public_repos}</p>
-              <a href={userData.html_url} target="_blank" rel="noopener noreferrer" className="text-blue-500">
-                View Profile
-              </a>
+          userData && userData.length > 0 && (
+            <div>
+              {userData.map((user) => (
+                <div key={user.login} className="border border-gray-300 p-4 rounded mb-4">
+                  <h2 className="text-lg">{user.login}</h2>
+                  <img src={user.avatar_url} alt={`${user.login}'s avatar`} width="100" />
+                  <p>Location: {user.location || 'N/A'}</p>
+                  <p>Repositories: {user.public_repos}</p>
+                  <a href={user.html_url} target="_blank" rel="noopener noreferrer" className="text-blue-500">
+                    View Profile
+                  </a>
+                </div>
+              ))}
             </div>
           )
         )}
@@ -89,13 +82,15 @@ const Search = ({ onSearch, userData, error }) => {
 
 Search.propTypes = {
   onSearch: PropTypes.func.isRequired,
-  userData: PropTypes.shape({
-    login: PropTypes.string.isRequired,
-    avatar_url: PropTypes.string.isRequired,
-    location: PropTypes.string,
-    public_repos: PropTypes.number,
-    html_url: PropTypes.string.isRequired,
-  }),
+  userData: PropTypes.arrayOf(
+    PropTypes.shape({
+      login: PropTypes.string.isRequired,
+      avatar_url: PropTypes.string.isRequired,
+      location: PropTypes.string,
+      public_repos: PropTypes.number,
+      html_url: PropTypes.string.isRequired,
+    })
+  ),
   error: PropTypes.string,
 };
 
