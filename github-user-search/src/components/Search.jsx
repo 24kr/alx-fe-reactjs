@@ -7,6 +7,17 @@ const Search = ({ onSearch, userData, error }) => {
   const [minRepos, setMinRepos] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const handleSearch = async ({ username, location, minRepos }) => {
+    try {
+      const data = await fetchUserData({ username, location, minRepos });
+      setUserData(data.items || []); // Get the list of users
+      setError(null); // Clear any previous errors
+    } catch (err) {
+      setError('Looks like we can\'t find the user');
+      setUserData([]);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
