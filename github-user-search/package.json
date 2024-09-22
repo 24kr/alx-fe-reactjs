@@ -10,7 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "autoprefixer": "^10.4.20",
     "axios": "^1.7.7",
+    "postcss": "^8.4.47",
     "prop-type": "^0.0.1",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
