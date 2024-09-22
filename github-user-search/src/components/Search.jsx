@@ -1,29 +1,34 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { fetchUserData } from '../services/githubService'; // Assuming the function is already there
 
-const Search = ({ onSearch, userData, error }) => {
+const Search = ({ setUserData, setError }) => {
   const [username, setUsername] = useState('');
   const [location, setLocation] = useState('');
   const [minRepos, setMinRepos] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
+  // Function to handle the search and fetch GitHub user data
+  const handleSearch = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    
+    setIsLoading(true); // Show loading state while fetching
+
     try {
-      await onSearch({ username, location, minRepos });
+      const data = await fetchUserData({ username, location, minRepos });
+      setUserData(data.items || []); // Set user data
+      setError(null); // Clear any error
     } catch (err) {
-      console.error('Error fetching GitHub user');
+      setError("Looks like we can't find the user");
+      setUserData([]); // Clear user data on error
     } finally {
-      setIsLoading(false);
+      setIsLoading(false); // Reset loading state
     }
   };
 
   return (
     <div>
       {/* Search Form */}
-      <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+      <form onSubmit={handleSearch} className="flex flex-col space-y-4">
         <input
           type="text"
           placeholder="Enter GitHub username"
@@ -53,39 +58,13 @@ const Search = ({ onSearch, userData, error }) => {
         </button>
         {isLoading && <p>Loading...</p>}
       </form>
-
-      {/* Results Section */}
-      <div className="mt-4">
-        {error ? (
-          <p className="text-red-500">Looks like we can't find the user</p>
-        ) : (
-          userData && (
-            <div className="border border-gray-300 p-4 rounded">
-              <h2 className="text-lg">{userData.login}</h2>
-              <img src={userData.avatar_url} alt={`${userData.login}'s avatar`} width="100" />
-              <p>Location: {userData.location || 'N/A'}</p>
-              <p>Repositories: {userData.public_repos}</p>
-              <a href={userData.html_url} target="_blank" rel="noopener noreferrer" className="text-blue-500">
-                View Profile
-              </a>
-            </div>
-          )
-        )}
-      </div>
     </div>
   );
 };
 
 Search.propTypes = {
-  onSearch: PropTypes.func.isRequired,
-  userData: PropTypes.shape({
-    login: PropTypes.string.isRequired,
-    avatar_url: PropTypes.string.isRequired,
-    location: PropTypes.string,
-    public_repos: PropTypes.number,
-    html_url: PropTypes.string.isRequired,
-  }),
-  error: PropTypes.string,
+  setUserData: PropTypes.func.isRequired,
+  setError: PropTypes.func.isRequired,
 };
 
 export default Search;
