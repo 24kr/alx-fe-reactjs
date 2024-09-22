@@ -1,35 +1,43 @@
-import PropTypes from 'prop-types'; // Import PropTypes
+import PropTypes from 'prop-types';
 
 const Results = ({ userData, error }) => {
   if (error) {
-    return <p style={{ color: 'red' }}>{error}</p>;
+    return <p className="text-red-500">Looks like we can not find the user</p>;
   }
 
-  if (userData) {
+  if (userData.length > 0) {
     return (
-      <div style={{ border: '1px solid #ddd', padding: '1rem', borderRadius: '4px' }}>
-        <h2>{userData.login}</h2>
-        <img src={userData.avatar_url} alt={`${userData.login}'s avatar`} width="100" />
-        <p>{userData.bio || 'No bio available'}</p>
-        <a href={userData.html_url} target="_blank" rel="noopener noreferrer">
-          View Profile
-        </a>
+      <div className="space-y-4">
+        {userData.map((user) => (
+          <div key={user.id} className="border border-gray-300 p-4 rounded">
+            <h2 className="text-lg">{user.login}</h2>
+            <img src={user.avatar_url} alt={`${user.login}'s avatar`} width="100" />
+            <p>Location: {user.location || 'N/A'}</p>
+            <p>Repositories: {user.public_repos}</p>
+            <a href={user.html_url} target="_blank" rel="noopener noreferrer" className="text-blue-500">
+              View Profile
+            </a>
+          </div>
+        ))}
       </div>
     );
   }
 
-  return null;
+  return <p>No results found.</p>;
 };
 
-// Define PropTypes for validation
 Results.propTypes = {
-  userData: PropTypes.shape({
-    login: PropTypes.string.isRequired,
-    avatar_url: PropTypes.string.isRequired,
-    bio: PropTypes.string,
-    html_url: PropTypes.string.isRequired,
-  }), // userData is expected to be an object (shape) with certain properties
-  error: PropTypes.string, // error is a string
+  userData: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      login: PropTypes.string.isRequired,
+      avatar_url: PropTypes.string.isRequired,
+      location: PropTypes.string,
+      public_repos: PropTypes.number,
+      html_url: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  error: PropTypes.string,
 };
 
 export default Results;

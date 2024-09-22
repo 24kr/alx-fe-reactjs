@@ -1,59 +1,61 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types'; // Import PropTypes
+import PropTypes from 'prop-types';
 
 const Search = ({ onSearch }) => {
   const [username, setUsername] = useState('');
+  const [location, setLocation] = useState('');
+  const [minRepos, setMinRepos] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setError(null);
-
+    
     try {
-      await onSearch(username); // Call the parent's onSearch function
+      await onSearch({ username, location, minRepos });
     } catch (err) {
-      setError('Looks like we can\'t find the user');
+      console.error('Error fetching GitHub user');
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ marginBottom: '1rem' }}>
+    <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
       <input
         type="text"
         placeholder="Enter GitHub username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
-        style={{
-          padding: '0.5rem',
-          marginRight: '0.5rem',
-          border: '1px solid #ddd',
-          borderRadius: '4px',
-        }}
+        className="p-2 border border-gray-300 rounded"
+      />
+      <input
+        type="text"
+        placeholder="Location (optional)"
+        value={location}
+        onChange={(e) => setLocation(e.target.value)}
+        className="p-2 border border-gray-300 rounded"
+      />
+      <input
+        type="number"
+        placeholder="Minimum Repositories (optional)"
+        value={minRepos}
+        onChange={(e) => setMinRepos(e.target.value)}
+        className="p-2 border border-gray-300 rounded"
       />
       <button
         type="submit"
-        style={{
-          padding: '0.5rem 1rem',
-          backgroundColor: '#007bff',
-          color: '#fff',
-          border: 'none',
-          borderRadius: '4px',
-        }}
+        className="bg-blue-500 text-white p-2 rounded"
       >
         Search
       </button>
       {isLoading && <p>Loading...</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
     </form>
   );
 };
 
 Search.propTypes = {
-  onSearch: PropTypes.func.isRequired, // Validate the onSearch function
+  onSearch: PropTypes.func.isRequired,
 };
 
 export default Search;
