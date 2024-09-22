@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 const Search = ({ onSearch, userData, error }) => {
   const [username, setUsername] = useState('');
@@ -7,12 +8,27 @@ const Search = ({ onSearch, userData, error }) => {
   const [minRepos, setMinRepos] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  // Fetch User Data from GitHub API
+  const fetchUserData = async ({ username, location, minRepos }) => {
+    try {
+      const query = `q=${username ? `${username}+` : ''}${
+        location ? `location:${location}+` : ''
+      }${minRepos ? `repos:>=${minRepos}` : ''}`;
+      
+      const response = await axios.get(`https://api.github.com/search/users?${query}`);
+      return response.data;
+    } catch (error) {
+      throw new Error('Error fetching GitHub user');
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     
     try {
-      await onSearch({ username, location, minRepos });
+      const data = await fetchUserData({ username, location, minRepos });
+      onSearch(data); // Pass the result to the parent component (App)
     } catch (err) {
       console.error('Error fetching GitHub users');
     } finally {
