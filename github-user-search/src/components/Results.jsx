@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 const Results = ({ userData, error }) => {
   if (error) {
-    return <p className="text-red-500">Looks like we can not find the user</p>;
+    return <p className="text-red-500">{error}</p>;
   }
 
   if (userData.length > 0) {
@@ -23,7 +23,7 @@ const Results = ({ userData, error }) => {
     );
   }
 
-  return <p>No results found.</p>;
+  return null;
 };
 
 Results.propTypes = {

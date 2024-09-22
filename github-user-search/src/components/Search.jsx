@@ -6,15 +6,17 @@ const Search = ({ onSearch }) => {
   const [location, setLocation] = useState('');
   const [minRepos, setMinRepos] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    
+    setError(null);
+
     try {
-      await onSearch({ username, location, minRepos });
+      await onSearch({ username, location, minRepos }); // Pass the search criteria
     } catch (err) {
-      console.error('Error fetching GitHub user');
+      setError('Looks like we can\'t find the user');
     } finally {
       setIsLoading(false);
     }
@@ -50,6 +52,7 @@ const Search = ({ onSearch }) => {
         Search
       </button>
       {isLoading && <p>Loading...</p>}
+      {error && <p className="text-red-500">{error}</p>}
     </form>
   );
 };
