@@ -5,25 +5,25 @@ import Results from './components/Results';
 import { fetchUserData } from './services/githubService';
 
 function App() {
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState([]);
   const [error, setError] = useState(null);
 
-  const handleSearch = async (username) => {
+  const handleSearch = async ({ username, location, minRepos }) => {
     try {
-      const data = await fetchUserData(username); // Fetch user data
-      setUserData(data);
+      const data = await fetchUserData({ username, location, minRepos });
+      setUserData(data.items || []); // Get the list of users
       setError(null); // Clear any previous errors
     } catch (err) {
       setError('Looks like we can\'t find the user');
-      setUserData(null);
+      setUserData([]);
     }
   };
 
   return (
     <div className="App">
       <NavBar />
-      <div style={{ padding: '1rem' }}>
-        <Search onSearch={handleSearch} /> {/* Pass handleSearch to Search component */}
+      <div className="p-4">
+        <Search onSearch={handleSearch} />
         <Results userData={userData} error={error} />
       </div>
     </div>
